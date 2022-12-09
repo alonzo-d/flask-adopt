@@ -6,11 +6,13 @@
     <h1>Pets</h1>
     {% for pet in pets %}
         <div>
-            <h2>{{pet.name}}</h2>
-            <img src="{{pet.url}}" alt="picture of {{pet.name}}">
+            <a href="/{{pet.id}}"><h2>{{pet.name}}</h2></a>
+            <img src="{{pet.photo_url}}" alt="picture of {{pet.name}}" style="width: 200px; height: auto">
             {% if pet.available %}
                 <b>Available</b>
             {% endif %}
         </div>
     {% endfor %}
+
+    <a class="btn btn-primary" href="/add">Add a pet</a>
 {% endblock %}

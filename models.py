@@ -53,7 +53,7 @@ class Pet(db.Model):
     )
 
     available = db.Column(
-        db.Text,
+        db.Boolean,
         nullable = False,
-        default = 'Available'
+        default = True
     )
