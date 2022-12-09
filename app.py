@@ -1,8 +1,10 @@
 """Flask app for adopt app."""
 
-from flask import Flask
+from flask import Flask, flash, request, redirect, render_template
+
 from flask_debugtoolbar import DebugToolbarExtension
-from models import db, connect_db
+
+from models import db, connect_db, Pet
 from forms import AddPetForm
 
 app = Flask(__name__)
@@ -12,6 +14,8 @@ app.config['SECRET_KEY'] = "secret"
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///adopt"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+debug = DebugToolbarExtension(app)
+
 connect_db(app)
 db.create_all()
 
@@ -20,7 +24,6 @@ db.create_all()
 #
 # app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
-toolbar = DebugToolbarExtension(app)
 
 @app.get('/')
 def show_home_page():
@@ -36,10 +39,24 @@ def add_new_pet():
 
     form = AddPetForm()
 
-    if form.validate.on_submit():
-        
+    if form.validate_on_submit():
+        name = form.name.data
+        species = form.species.data
+        photo_url = form.photo_url.data
+        age = form.age.data
+        notes = form.notes.data
+
+        flash(f'Added {name}')
+
+        pet = Pet(name=name, species=species, photo_url=photo_url, age=age, notes=notes)
+
+        db.session.add(pet)
+        db.session.commit()
+
+        return redirect('/')
+
     else:
         return render_template(
-            '/add',
+            'add_pet.html',
             form=form
         )

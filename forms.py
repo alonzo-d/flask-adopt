@@ -16,7 +16,7 @@ class AddPetForm(FlaskForm):
         validators=[InputRequired()]
     )
     photo_url = StringField(
-        "Photo URL"
+        "Photo URL",
         validators=[InputRequired(), URL()]
     )
     age = SelectField(
