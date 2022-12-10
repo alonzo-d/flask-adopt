@@ -35,7 +35,8 @@ def show_home_page():
 
 @app.route('/add', methods=["GET", "POST"])
 def add_new_pet():
-    """ handle get/post for adding a new pet to the db """
+    """ handle get/post for adding a new pet to the db """ 
+    #TODO: be more desriptive about validation
 
     form = AddPetForm()
 
@@ -46,13 +47,12 @@ def add_new_pet():
         age = form.age.data
         notes = form.notes.data
 
-        flash(f'Added {name}')
-
         pet = Pet(name=name, species=species, photo_url=photo_url, age=age, notes=notes)
 
         db.session.add(pet)
         db.session.commit()
 
+        flash(f'Added {name}')
         return redirect('/')
 
     else:
