@@ -45,8 +45,6 @@ def get_pet_finder_oauth_token():
 
 API_OAUTH_TOKEN = get_pet_finder_oauth_token()
 
-breakpoint()
-
 @app.get('/')
 def show_home_page():
     """ show home page with list of pets """
